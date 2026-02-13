@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anmol ❤️</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Floating hearts -->
+    <div class="hearts"></div>
+
+    <div class="container">
+        <h1 id="typing" class="glow-text"></h1>
+
+        <div class="btn-group">
+            <button id="yesBtn" onclick="yesClicked()">YES 💖</button>
+            <button id="noBtn" onmouseover="moveNo()">NO 😏</button>
+        </div>
+
+        <div id="letter" class="letter">
+            <p>
+                Anmol ❤️<br><br>
+Liking you wasn’t a decision, it just happened.<br>
+You make me feel seen and cared for.<br>
+Every conversation with you feels meaningful.<br>
+There’s peace in knowing you’re here.<br><br>
+This little website is just for you,<br>
+a simple way of expressing what I find hard to say out loud.<br>
+It’s my way of turning feelings into something you can see and feel.<br>
+I don’t need big promises,<br>
+just you, being you, with me 💗
+
+            </p>
+        </div>
+    </div>
+
+    <!-- 🎵 SONG (plays after YES click) -->
+    <audio id="song">
+        <source src="{{ url_for('static', filename='Sochan Vich Tu.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <script>
+        /* Typing effect */
+        const text = "Dear Anmol,\n\
+In this noisy world, you feel like silence I’ve been searching for.\n\
+Every smile of yours feels like home,\n\
+and every moment with you feels like a promise.\n\n\
+Will you be my Valentine… today and always? ✨";
+
+
+
+        let i = 0;
+        function typingEffect() {
+            if (i < text.length) {
+                document.getElementById("typing").innerHTML +=
+                    text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+                i++;
+                setTimeout(typingEffect, 90);
+            }
+        }
+        typingEffect();
+
+        /* Floating hearts */
+        const heartsContainer = document.querySelector(".hearts");
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (16 + Math.random() * 24) + "px";
+            heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }, 250);
+
+        /* NO button runs away */
+        function moveNo() {
+            const noBtn = document.getElementById("noBtn");
+            const x = Math.random() * 60 - 30;
+            const y = Math.random() * 60 - 30;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        /* YES clicked */
+        function yesClicked() {
+            const song = document.getElementById("song");
+            song.currentTime = 0;
+            song.play();
+
+            explodeHearts();
+            document.getElementById("letter").style.display = "block";
+            document.querySelector(".btn-group").style.display = "none";
+        }
+
+        /* Heart explosion */
+        function explodeHearts() {
+            for (let i = 0; i < 60; i++) {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "💖";
+                heart.style.left = "50vw";
+                heart.style.bottom = "50vh";
+                heart.style.fontSize = "24px";
+                heart.style.animation = "explode 1.5s ease-out forwards";
+                heart.style.setProperty("--x", (Math.random() * 400 - 200) + "px");
+                heart.style.setProperty("--y", (Math.random() * 400 - 200) + "px");
+                heartsContainer.appendChild(heart);
+                setTimeout(() => heart.remove(), 1500);
+            }
+        }
+    </script>
+
+</body>
+</html>
